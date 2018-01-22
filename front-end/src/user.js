@@ -7,7 +7,7 @@ class User {
     userStore.push(this)
   }
 
-  function getCard() {
+  getCard() {
     return cardStore.filter(card => card.user_id === this.id)
   }
 }

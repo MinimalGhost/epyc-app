@@ -1,10 +1,11 @@
+let gameStore = []
 class Game {
-  constructor(id, title, status, num_of_players) {
-    this.id = id
-    this.title = title
-    this.status = status
-    this.num_of_players = num_of_players
-    this.turns = num_of_players
+  constructor(obj) {
+    this.id = obj.id
+    this.title = obj.title
+    this.status = "pending"
+    this.num_of_players = obj.num_of_players
+    this.turns = this.num_of_players
   }
 
   getUsers(){
