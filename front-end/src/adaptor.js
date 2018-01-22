@@ -5,27 +5,43 @@ const Adaptor = (function() {
   return class Adaptor {
 
     static getUsers() {
-      return fetch(`${BASE_URL}/users`)
+      fetch(`${BASE_URL}/users`)
         .then( res => res.json())
-        .then(userData => new User(userData.id, userData.name, userData.game_id))
+        .then(userData => {
+          userData.forEach(function(user) {
+            new User(user.id, user.name, user.game_id)
+         })
+      })
     }
 
     static getGames() {
-      return fetch(`${BASE_URL}/games`)
+      fetch(`${BASE_URL}/games`)
         .then( res => res.json())
-        .then(gameData => new Game(gameData.id, gameData.title, gameData.status, gameData.num_of_players))
+        .then(gameData => {
+          gameData.forEach(function(game) {
+            new Game(game.id, game.title, game.status, game.num_of_players, game.turns)
+         })
+      })
     }
 
     static getCards() {
-      return fetch(`${BASE_URL}/cards`)
+      fetch(`${BASE_URL}/cards`)
         .then( res => res.json())
-        .then( cardData => new Card(cardData.id, cardData.user_id))
+        .then(cardData => {
+          cardData.forEach(function(card) {
+            new Card(card.id, card.user_id)
+         })
+      })
     }
 
     static getEntries() {
-      return fetch(`${BASE_URL}/entries`)
+      fetch(`${BASE_URL}/entries`)
         .then( res => res.json())
-        .then( entryData => new Entry(entryData.id, entryData.user_id))
+        .then(entryData => {
+          entryData.forEach(function(entry) {
+            new Entry(entry.id, entry.user_id, entry.card_id)
+         })
+      })
     }
 
     // static createNewGame() {

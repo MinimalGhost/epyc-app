@@ -1,3 +1,5 @@
+gameStore = []
+
 class Game {
   constructor(id, title, status, num_of_players) {
     this.id = id
@@ -5,6 +7,7 @@ class Game {
     this.status = status
     this.num_of_players = num_of_players
     this.turns = num_of_players
+    gameStore.push(this)
   }
 
   getUsers(){
