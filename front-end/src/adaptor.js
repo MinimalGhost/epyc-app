@@ -73,10 +73,37 @@ const Adaptor = (function() {
         })
       }).then(res => res.json())
       .then(json => new User(json))
-      .then(resp => App.gameLobby(game_id))
-
+      .then(resp => {
+        Adaptor.getGameStatus(game_id)
+        App.gameLobby(game_id)
+      })
     }
 
+    static getGameStatus(game_id){
+    // Use a set-timeout to make the first request only after 5 seconds
+    setTimeout(function(){
+      // After 5 seconds, make your request
+      fetch(`${BASE_URL}/games/${game_id}`)
+        // Convert your response to JSON
+        .then(resp => resp.json())
+        // If your response data fulfills some condition, do something with it
+        .then(data => {
+
+          if (data.status === "in progress") {
+            console.log(data)
+            // start the game
+            // doSomethingWithData()
+          } else {
+            // If your response data doesn't fulfill the condition, then
+            // call getGameStatus again recursively.
+            // getGameStatus()
+            App.gameLobby(game_id)
+            console.log(data)
+            Adaptor.getGameStatus(game_id)
+          }
+        })
+    }, 5000);
+  }
 
     static createNewGame(title, num_of_players){
       fetch(`${BASE_URL}/games`, {

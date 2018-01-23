@@ -22,23 +22,19 @@ class Game {
 
   }
 
-  static checkGamesStatus(){
-      console.log("in fucntion")
-    return gameStore.forEach(function(game){
-      console.log("in foreach")
-      if(game.num_of_players === game.getUsers().length) {
-        game.status = "in progess"
-        Adaptor.updateGame(game.status, game.id)
-              // "Pending" changes to "In progress" when num_of_players matches total number of users with the associated game id
-            // FETCH - PATCH: change status from "pending" to "in progress" to "complete"
-      } else if (game.turns === 0){
-          game.status = "complete"
-        // "in progress" changes to "complete" when number of turns = 0
-      }
-    })
-  }
-
-
-
+  // static checkGamesStatus(){
+  //
+  //   return gameStore.forEach(function(game){
+  //     if(game.num_of_players === game.getUsers().length) {
+  //       game.status = "in progess"
+  //       Adaptor.updateGame(game.status, game.id)
+  //           // "Pending" changes to "In progress" when num_of_players matches total number of users with the associated game id
+  //           // FETCH - PATCH: change status from "pending" to "in progress" to "complete"
+  //     } else if (game.turns === 0){
+  //         game.status = "complete"
+  //       // "in progress" changes to "complete" when number of turns = 0
+  //     }
+  //   })
+  // }
 
 }

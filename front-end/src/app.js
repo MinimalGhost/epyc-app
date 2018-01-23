@@ -73,7 +73,7 @@ class App {
 
 
   static gameLobby(game_id){
-
+    
     let current_game = gameStore.filter(game => game.id === parseInt(game_id))[0]
     let users = userStore.filter(user => user.game_id === parseInt(game_id))
     // need to find a way to calculate number of players in the game
@@ -105,7 +105,7 @@ class App {
   static renderExistingGames(){
     console.log("im in render existing games")
 
-    Game.checkGamesStatus();
+    // Game.checkGamesStatus();
 
 
     let pendingGames = gameStore.filter(game => game.status === "pending")
