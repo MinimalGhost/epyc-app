@@ -134,18 +134,38 @@ class App {
     main_body_div.append(pendingGamesDiv)
   }
 
+  static handleTurn(game_id){
 
-  static renderGame(){
+    // need our conditional regarding turns and which sentence / canvas
+
+  }
+
+  static renderSentence(game_id){
+    let game = gameStore.filter(game => game.id === game_id)
     let main_body_div = document.getElementsByClassName("container")[0]
     main_body_div.innerHTML = ''
 
     let game_view = document.createElement("div")
     game_view.className = "game-view"
-    game_view.innerHTML = `<h3>does this work??????</h3>`
 
+    game_view.innerHTML = `<h3> ${game.title} </h3>
+    <h4>Round ${game.turns}</h4>`
+
+    let sentence_form = document.createElement("form")
+    sentence_form.innerHTML =
+    `<input type="hidden" name="game_id" value=${game_id}>
+    <input type="text" name="sentence" placeholder="Type Your Sentence"><br>
+    <input type="submit" id="submit-sentence-button" value="Submit Sentence">
+    `
+    game_view.append(sentence_form)
     main_body_div.append(game_view)
-
   }
+
+  static submitSentence(game_id){}
+
+  static renderCanvas(game_id){}
+
+  static submitCanvas(game_id){}
 
 
 

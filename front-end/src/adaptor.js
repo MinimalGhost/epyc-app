@@ -93,7 +93,8 @@ const Adaptor = (function() {
             console.log(data)
             // start the game
             // doSomethingWithData()
-            App.renderGame();
+
+            App.renderSentence(game_id);
           } else {
             // If your response data doesn't fulfill the condition, then
             // call getGameStatus again recursively.
@@ -116,7 +117,7 @@ const Adaptor = (function() {
           title: `${title}`,
           num_of_players: `${num_of_players}`,
           status: `pending`,
-          turns: `${num_of_players}`
+          turns: `1`
         })
       }).then(res => res.json()).
       then(json => {
