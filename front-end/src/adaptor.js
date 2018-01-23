@@ -9,7 +9,7 @@ const Adaptor = (function() {
         .then( res => res.json())
         .then(userData => {
           userData.forEach(function(user) {
-            new User(user.id, user.name, user.game_id)
+            let new_user = new User(user)
          })
       })
     }
@@ -19,8 +19,9 @@ const Adaptor = (function() {
         .then( res => res.json())
         .then(gameData => {
           gameData.forEach(function(game) {
-            new Game(game.id, game.title, game.status, game.num_of_players, game.turns)
+            new Game(game)
          })
+         App.renderExistingGames()
       })
     }
 
@@ -29,7 +30,7 @@ const Adaptor = (function() {
         .then( res => res.json())
         .then(cardData => {
           cardData.forEach(function(card) {
-            new Card(card.id, card.user_id)
+            new Card(card)
          })
       })
     }
@@ -39,14 +40,49 @@ const Adaptor = (function() {
         .then( res => res.json())
         .then(entryData => {
           entryData.forEach(function(entry) {
-            new Entry(entry.id, entry.user_id, entry.card_id)
+            new Entry(entry)
          })
       })
     }
 
-    // static createNewGame() {
-    //
-    // }
+    static createNewUser(newuser, game_id){
+      fetch(`${BASE_URL}/users`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: `${newuser}`,
+          game_id: `${game_id}`
+        })
+      }).then(res => res.json())
+      .then(json => new User(json))
+      .then(resp => App.gameLobby(game_id))
+
+    }
+
+
+    static createNewGame(title, num_of_players){
+      fetch(`${BASE_URL}/games`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          title: `${title}`,
+          num_of_players: `${num_of_players}`,
+          status: `pending`
+        })
+      }).then(res => res.json()).
+      then(json => {
+        let game = new Game(json)
+        console.log(game)
+        App.renderNewUser(game.id)
+      })
+    }
   }
+
 
 })()
