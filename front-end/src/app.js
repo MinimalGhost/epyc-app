@@ -1,23 +1,47 @@
 class App {
-  let main_body_div = document.getElementsByClassName("container")[0]
 
   static init() {
 
-    // Start Game
-    let startButton = document.getElementById("create-new-game-button")
-    startButton.addEventListener("click", App.NewGame)
 
-    let submitNewGameButton = document.getElementById("submit-new-game-button")
-    submitNewGameButton.addEventListener("submit", App.submitNewGame)
+    let main_div = document.getElementsByClassName("container")[0]
+    main_div.addEventListener("click", App.startOrJoinGame)
 
-    let joinGameButton = document.getElementById("current-games-button")
-    joinGameButton.addEventListener("click", App.joinExistingGame)
+
+    // Sumbit New Game
+    main_div.addEventListener("submit", App.createUser)
 
   }
 
 
-  static NewGame(){
+  static startOrJoinGame(event){
+    event.preventDefault()
 
+    if (event.target.id === "create-new-game-button"){
+      App.renderGameForm()
+    } else if (event.target.id === "join-game-button"){
+
+      Adaptor.getGames()
+      Adaptor.getUsers()
+    } else if (event.target.id === "submit-new-game-button"){
+      let title = document.getElementById("submit-new-game-button").parentNode.title.value
+      let num_of_players = document.getElementById("submit-new-game-button").parentNode.num_of_players.value
+      Adaptor.createNewGame(title, num_of_players);
+    } else if (event.target.id === "submit-new-user-button"){
+      let new_user = document.getElementById("submit-new-user-button").parentNode.user.value
+      let game_id = document.getElementById("submit-new-user-button").parentNode.game_id.value
+      Adaptor.createNewUser(new_user, game_id);
+    } else if(event.target.className === "join-game-id-button"){
+      let game_id = event.target.dataset.id
+      App.renderNewUser(game_id)
+    }
+
+
+
+
+  }
+
+  static renderGameForm(){
+    let main_body_div = document.getElementsByClassName("container")[0]
     main_body_div.innerHTML = ''
 
     let new_game_form = document.createElement("form")
@@ -25,46 +49,98 @@ class App {
     new_game_form.innerHTML =
     `<p>Please enter the following information to play!</p>
     <label for="title">Title of Game</label>
-    <input type="text" name="title" value="Game Title"><br>
+    <input type="text" name="title" placeholder="Game Title"><br>
     <label for="num_of_players">Number of Players</label>
-      <input type="text" name="num_of_players" value="Number of Players"><br>
+      <input type="number" name="num_of_players" placeholder="Number of Players"><br>
       <input type="submit" id="submit-new-game-button" name="start" value="Start New Game">`
     main_body_div.append(new_game_form)
   }
 
-// handle submit new game
-  static submitNewGame(){
-    // need a fetch to post here
-    // Adaptor.createNewGame().then(resp => App.enterLobby); --> this is where submitNewGame will be called?
-  }
 
-  static enterLobby(){
-
-  }
-
-  static joinExistingGame(){
+  static renderNewUser(game_id){
+    let main_body_div = document.getElementsByClassName("container")[0]
     main_body_div.innerHTML = ''
-    let gamesToJoin = document.createElement("div")
-    gamesToJoin.innerHTML = `<h2>Select a Game to Join!</h2>`
+
+    let new_user_form = document.createElement("form")
+    new_user_form.className = 'new-user-form'
+    new_user_form.innerHTML =
+    `<p>Please enter your name to begin!</p>
+    <input type="hidden" name="game_id" value=${game_id}>
+    <input type="text" name="user" placeholder="Name"><br>
+    <input type="submit" id="submit-new-user-button" value="Submit Name">`
+
+    main_body_div.append(new_user_form)
+  }
+
+
+
+
+  static gameLobby(game_id){
+
+    let current_game = gameStore.filter(game => game.id === parseInt(game_id))[0]
+    let users = userStore.filter(user => user.game_id === parseInt(game_id))
+    // need to find a way to calculate number of players in the game
+
+    let main_body_div = document.getElementsByClassName("container")[0]
+    main_body_div.innerHTML = ''
+
+    let game_view = document.createElement("div")
+    game_view.className = "game-lobby"
+    game_view.innerHTML =
+    `<h3>${current_game.title}</h3>
+    <p>Number of Players: ${users.length} / ${current_game.num_of_players}</p>
+    <ul id="users-list">
+    </ul>`
+    main_body_div.append(game_view)
+    let userslist = document.getElementById("users-list")
+      users.forEach(function(user){
+        let userLI = document.createElement("li")
+        userLI.innerHTML = `${user.name}`
+        userslist.append(userLI)
+      })
+
+
+    game_view.append(userslist)
+
+  }
+
+
+  static renderExistingGames(){
+    console.log("im in render existing games")
+
+    Game.checkGamesStatus();
+
+
     let pendingGames = gameStore.filter(game => game.status === "pending")
 
-    pendingGames.forEach(game => {
-      let game_p = document.createElement("p")
-      game_p.innerHTML =
-      `${game.title} - <button id="join-game-button" type="button" name="button">Join</button>`
-      gamesToJoin.append(game_p)
+    let main_body_div = document.getElementsByClassName("container")[0]
+    main_body_div.innerHTML = ''
+
+    let pendingGamesDiv = document.createElement("div")
+    pendingGamesDiv.className = "pending-games"
+    pendingGamesDiv.innerHTML = `<h3>Pending Games: Select One To Join</h3>`
+
+    pendingGames.forEach(function(game){
+      let gameP = document.createElement("p")
+      console.log(game)
+      gameP.innerHTML = `${game.title}: ${game.num_of_players - game.getUsers().length} spot(s) available`
+
+
+      let joinButton = document.createElement("button")
+      joinButton.className = "join-game-id-button"
+      joinButton.dataset.id = game.id
+      joinButton.innerHTML = `Join`
+      gameP.append(joinButton)
+      pendingGamesDiv.append(gameP)
     })
+
+    main_body_div.append(pendingGamesDiv)
+
+
   }
 
-  // handle startGame
 
-  // handle turns
 
-  // handle submitInput
-
-  // handle submitInput
-
-  //
 
 
 

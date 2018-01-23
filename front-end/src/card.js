@@ -1,7 +1,7 @@
 let cardStore = []
 
 class Card {
-  constructor(id, user_id) {
+  constructor({id, user_id}) {
     this.id = id
     this.user_id = user_id
     cardStore.push(this)

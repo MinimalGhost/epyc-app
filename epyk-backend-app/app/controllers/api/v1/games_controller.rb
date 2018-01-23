@@ -6,6 +6,16 @@ class Api::V1::GamesController < ApplicationController
     render json: @games
   end
 
+
+  def create
+    @game = Game.new(game_params)
+    if @game.save
+      render json: @game
+    else
+      render json: {errors: @game.errors.full_messages}, status: 422
+    end
+  end
+
   def update
     @game = Game.find(params[:id])
 
