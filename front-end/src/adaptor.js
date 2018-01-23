@@ -1,6 +1,6 @@
 const Adaptor = (function() {
 
-  const BASE_URL = `http://d576806e.ngrok.io/api/v1`
+  const BASE_URL = `http://localhost:3000/api/v1`
 
   return class Adaptor {
 
@@ -115,7 +115,8 @@ const Adaptor = (function() {
         body: JSON.stringify({
           title: `${title}`,
           num_of_players: `${num_of_players}`,
-          status: `pending`
+          status: `pending`,
+          turns: `${num_of_players}`
         })
       }).then(res => res.json()).
       then(json => {
