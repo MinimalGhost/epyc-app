@@ -1,6 +1,6 @@
 const Adaptor = (function() {
 
-  const BASE_URL = `http://localhost:3000/api/v1`
+  const BASE_URL = `http://d576806e.ngrok.io/api/v1`
 
   return class Adaptor {
 
@@ -93,12 +93,12 @@ const Adaptor = (function() {
             console.log(data)
             // start the game
             // doSomethingWithData()
+            App.renderGame();
           } else {
             // If your response data doesn't fulfill the condition, then
             // call getGameStatus again recursively.
             // getGameStatus()
             App.gameLobby(game_id)
-            console.log(data)
             Adaptor.getGameStatus(game_id)
           }
         })

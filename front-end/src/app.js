@@ -73,7 +73,7 @@ class App {
 
 
   static gameLobby(game_id){
-    
+
     let current_game = gameStore.filter(game => game.id === parseInt(game_id))[0]
     let users = userStore.filter(user => user.game_id === parseInt(game_id))
     // need to find a way to calculate number of players in the game
@@ -132,7 +132,18 @@ class App {
     })
 
     main_body_div.append(pendingGamesDiv)
+  }
 
+
+  static renderGame(){
+    let main_body_div = document.getElementsByClassName("container")[0]
+    main_body_div.innerHTML = ''
+
+    let game_view = document.createElement("div")
+    game_view.className = "game-view"
+    game_view.innerHTML = `<h3>does this work??????</h3>`
+
+    main_body_div.append(game_view)
 
   }
 
