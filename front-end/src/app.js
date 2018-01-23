@@ -19,9 +19,9 @@ class App {
     if (event.target.id === "create-new-game-button"){
       App.renderGameForm()
     } else if (event.target.id === "join-game-button"){
-
-      Adaptor.getGames()
       Adaptor.getUsers()
+      // Adaptor.getGames()
+
     } else if (event.target.id === "submit-new-game-button"){
       let title = document.getElementById("submit-new-game-button").parentNode.title.value
       let num_of_players = document.getElementById("submit-new-game-button").parentNode.num_of_players.value
@@ -34,9 +34,6 @@ class App {
       let game_id = event.target.dataset.id
       App.renderNewUser(game_id)
     }
-
-
-
 
   }
 
