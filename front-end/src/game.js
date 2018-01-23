@@ -32,7 +32,6 @@ class Game {
               // "Pending" changes to "In progress" when num_of_players matches total number of users with the associated game id
             // FETCH - PATCH: change status from "pending" to "in progress" to "complete"
       } else if (game.turns === 0){
-
           game.status = "complete"
         // "in progress" changes to "complete" when number of turns = 0
       }
