@@ -1,6 +1,7 @@
 const Adaptor = (function() {
 
-  const BASE_URL = `http://5c697064.ngrok.io/api/v1`
+  const BASE_URL = `http://af417e12.ngrok.io/api/v1`
+
 
   return class Adaptor {
 
@@ -16,6 +17,7 @@ const Adaptor = (function() {
     }
 
     static getGames() {
+      gameStore = [];
       fetch(`${BASE_URL}/games`)
         .then( res => res.json())
         .then(gameData => {
@@ -26,19 +28,19 @@ const Adaptor = (function() {
       })
     }
 
-    static updateGame(status, game_id) {
-      fetch(`${BASE_URL}/games/${game_id}`, {
-        method: "PATCH",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          status: `${status}`
-        })
-      }).then(res => res.json())
-      .then(res => console.log(res))
-    }
+    // static updateGame(status, game_id) {
+    //   fetch(`${BASE_URL}/games/${game_id}`, {
+    //     method: "PATCH",
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //       status: `${status}`
+    //     })
+    //   }).then(res => res.json())
+    //   .then(res => console.log(res))
+    // }
 
     static getCards() {
       fetch(`${BASE_URL}/cards`)
@@ -93,7 +95,6 @@ const Adaptor = (function() {
           if (data.status === "in progress") {
             // start the game
             // doSomethingWithData()
-
             App.renderSentenceForm(game_id);
           } else {
             // If your response data doesn't fulfill the condition, then
@@ -103,7 +104,7 @@ const Adaptor = (function() {
             Adaptor.getGameStatus(game_id)
           }
         })
-    }, 5000);
+    }, 1000);
   }
 
     static createNewGame(title, num_of_players){
@@ -141,8 +142,8 @@ const Adaptor = (function() {
       .then(res => new Card(res))
     }
 
-    static submitEntry(input, user_id, card_id) {
-      fetch(`${BASE_URL}/entries`, {
+    static createEntry(input, user_id, card_id) {
+      return fetch(`${BASE_URL}/entries`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -154,33 +155,23 @@ const Adaptor = (function() {
           card_id: `${card_id}`
         })
       }).then( res => res.json())
-      .then( entryData => new Entry(entryData) )
+      .then( entryData => new Entry(entryData))
     }
 
-    static getGameUsers(game_id) {
-      fetch(`${BASE_URL}/users`)
-        .then( res => res.json())
-        .then(userData => {
-          let gameUsers = userData.filter( user => user.game_id === game_id)
-          let allEntries = gameUsers.forEach( user => Adaptor.getUserEntries(user.id))
-          console.log(allEntries)
-        })
-      }
+    static updateGameState(game_id){
 
-    static getUserEntries(user_id) {
-       fetch(`${BASE_URL}/entries`)
-        .then(res => res.json())
-        .then( entriesData => {
-          let userEntries = entriesData.filter( entry => entry.user_id === user_id)
-        })
+      return fetch(`${BASE_URL}/games/${game_id}`)
+      .then(res => res.json())
+      .then(res => {
+        let game = gameStore.filter(game => game.id == game_id)[0]
+        console.log("before we update the frontend game", game)
+        game.users = res.users;
+        game.cards = res.cards;
+        game.turns = res.turns;
+        console.log("after we update the frontend game", game)
+
+      })
     }
-
-
-
-
-
-
-
 
   }
 

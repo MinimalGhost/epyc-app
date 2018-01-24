@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   belongs_to :game, required: false
   has_many :entries
+  has_many :cards
   after_save :check_game_users
 
   def check_game_users

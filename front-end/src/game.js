@@ -4,6 +4,8 @@ class Game {
     this.id = obj.id
     this.title = obj.title
     this.status = "pending"
+    this.users = obj.users
+    this.cards = obj.cards
     this.num_of_players = obj.num_of_players
     this.turns = this.num_of_players
     gameStore.push(this)
