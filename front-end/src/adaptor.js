@@ -153,11 +153,26 @@ const Adaptor = (function() {
         let game = gameStore.filter(game => game.id == game_id)[0]
         console.log("before we update the frontend game", game)
         game.users = res.users;
+        game.status = res.status;
         game.cards = res.cards;
         game.turns = res.turns;
         console.log("after we update the frontend game", game)
 
       })
+    }
+
+    static updateGameTurn(game_id, turns){
+      return fetch(`${BASE_URL}/games/${game_id}`, {
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          turns: `${turns}`
+        })
+      }).then(res => res.json())
+      .then(res => Adaptor.updateGameState(game_id))
     }
 
   }

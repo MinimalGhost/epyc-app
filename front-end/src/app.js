@@ -150,16 +150,9 @@ class App {
   }
 
 
-  // static handleTurn(game_id){
-  //   setTimeout(function(){
-  //     let game = gameStore.filter(game => game.id == game_id)[0]
-  //     // FIRST SUBMIT THE FIRST ROUND OF THE Sentence
-  //     // if all people submit a sentence
-  //     // then submit, and increment the turn
-  //     // ELSE IF THE TURN IS EVEN = RENDER CANVAS
-  //     // THEN SUBMIT CANVAS AND increment the turn
-  //   }, 5000);
-  // }
+  static handleTurn(game_id){
+    console.log("YAY")
+  }
 
     // need our conditional regarding turns and which sentence / canvas
 
@@ -197,16 +190,18 @@ class App {
     let game_id = document.getElementsByClassName("container")[0].dataset.game
     let game_frontend = gameStore.filter(game => game.id === parseInt(game_id))[0]
 
+
     setTimeout(function(){
       let game_entries = [].concat.apply([], game_frontend.cards.map(card => card.entries))
 
+
       Adaptor.updateGameState(game_id).then(resp =>{
+        // this conditional will need to change based on the users*turn
         if(game_entries.length === game_frontend.users.length){
-          console.log("this worked")
-          console.log(game_entries)
+          Adaptor.updateGameTurn(game_id, game_frontend.turns++)
+          .then(res => App.handleTurn(game_id));
         } else {
-          console.log("we are in the else")
-          console.log(game_entries)
+
           App.getTurnCompleted(input, user_id, card_id)
         }
       })
