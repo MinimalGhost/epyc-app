@@ -76,13 +76,13 @@ const Adaptor = (function() {
       }).then(res => res.json())
       .then(json => new User(json))
       .then(resp => {
-        Adaptor.getGameStatus(game_id)
+        Adaptor.getGameStatus(game_id, resp.id)
         Adaptor.createCard(resp.id)
         App.gameLobby(game_id, resp.id)
       })
     }
 
-    static getGameStatus(game_id){
+    static getGameStatus(game_id, user_id){
     // Use a set-timeout to make the first request only after 5 seconds
     setTimeout(function(){
       // After 5 seconds, make your request
@@ -100,8 +100,8 @@ const Adaptor = (function() {
             // If your response data doesn't fulfill the condition, then
             // call getGameStatus again recursively.
             // getGameStatus()
-            App.gameLobby(game_id)
-            Adaptor.getGameStatus(game_id)
+            App.gameLobby(game_id, user_id)
+            Adaptor.getGameStatus(game_id, user_id)
           }
         })
     }, 1000);

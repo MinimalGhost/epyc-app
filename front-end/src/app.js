@@ -124,7 +124,7 @@ class App {
     let current_game = gameStore.filter(game => game.id === parseInt(game_id))[0]
     let users = userStore.filter(user => user.game_id === parseInt(game_id))
     // need to find a way to calculate number of players in the game
-
+    console.log("users: ", users, "userid: ", user_id)
     let game_div = document.getElementById("game-div")
     main_body_div.dataset.user = user_id
     // game_div.dataset.card = card_id[0].id
@@ -170,7 +170,7 @@ class App {
     game_div.innerHTML = ''
 
     let card_id = cardStore.filter( card => card.user_id == main_body_div.dataset.user )
-    debugger
+
     main_body_div.dataset.card = card_id[0].id
     game_div.innerHTML = ''
 
