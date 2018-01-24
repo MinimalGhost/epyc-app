@@ -32,6 +32,6 @@ class Api::V1::CardsController < ApplicationController
 
   private
   def card_params
-    params.permit(:title, :status, :num_of_players)
+    params.permit(:user_id)
   end
 end

@@ -135,13 +135,24 @@ class App {
   }
 
   static handleTurn(game_id){
+    setTimeout(function(){
+      // FIRST SUBMIT THE FIRST ROUND OF THE Sentence
+      // if all people submit a sentence
+      // then submit, and increment the turn
+      // ELSE IF THE TURN IS EVEN = RENDER CANVAS
+      // THEN SUBMIT CANVAS AND increment the turn
 
-    // need our conditional regarding turns and which sentence / canvas
+
+    },5000);
+
 
   }
 
+    // need our conditional regarding turns and which sentence / canvas
+
   static renderSentence(game_id){
-    let game = gameStore.filter(game => game.id === game_id)
+    let game = gameStore.filter(game => game.id == game_id)[0]
+
     let main_body_div = document.getElementsByClassName("container")[0]
     main_body_div.innerHTML = ''
 

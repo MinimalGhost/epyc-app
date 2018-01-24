@@ -75,6 +75,7 @@ const Adaptor = (function() {
       .then(json => new User(json))
       .then(resp => {
         Adaptor.getGameStatus(game_id)
+        Adaptor.createCard(resp.id)
         App.gameLobby(game_id)
       })
     }
@@ -126,6 +127,27 @@ const Adaptor = (function() {
         App.renderNewUser(game.id)
       })
     }
+
+    static createCard(user_id){
+      fetch(`${BASE_URL}/cards`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          user_id: `${user_id}`
+        })
+      }).then(res => res.json())
+      .then(res => new Card(res))
+    }
+
+
+
+
+
+
+
   }
 
 
