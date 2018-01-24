@@ -151,17 +151,17 @@ const Adaptor = (function() {
       .then(res => res.json())
       .then(res => {
         let game = gameStore.filter(game => game.id == game_id)[0]
-        console.log("before we update the frontend game", game)
         game.users = res.users;
         game.status = res.status;
         game.cards = res.cards;
         game.turns = res.turns;
-        console.log("after we update the frontend game", game)
-
       })
     }
 
-    static updateGameTurn(game_id, turns){
+    static updateGameTurn(game_id){
+      let turn = parseInt(gameStore.filter(game => game.id == game_id)[0].turns)
+      console.log("This turn is what we are sending to the patch", turn)
+      console.log("game_id", game_id)
       return fetch(`${BASE_URL}/games/${game_id}`, {
         method: "PATCH",
         headers: {
@@ -169,10 +169,12 @@ const Adaptor = (function() {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          turns: `${turns}`
+          turns: ++turn
         })
-      }).then(res => res.json())
-      .then(res => Adaptor.updateGameState(game_id))
+      }).then(res => { return res.json()})
+      .then(res => {
+        Adaptor.updateGameState(game_id)
+      })
     }
 
   }

@@ -34,7 +34,7 @@ class Api::V1::GamesController < ApplicationController
 
   private
   def game_params
-    params.permit(:title, :status, :num_of_players)
+    params.permit(:title, :status, :num_of_players, :turns)
   end
 
 

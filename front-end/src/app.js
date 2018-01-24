@@ -152,6 +152,7 @@ class App {
 
   static handleTurn(game_id){
     console.log("YAY")
+
   }
 
     // need our conditional regarding turns and which sentence / canvas
@@ -190,7 +191,6 @@ class App {
     let game_id = document.getElementsByClassName("container")[0].dataset.game
     let game_frontend = gameStore.filter(game => game.id === parseInt(game_id))[0]
 
-
     setTimeout(function(){
       let game_entries = [].concat.apply([], game_frontend.cards.map(card => card.entries))
 
@@ -198,7 +198,7 @@ class App {
       Adaptor.updateGameState(game_id).then(resp =>{
         // this conditional will need to change based on the users*turn
         if(game_entries.length === game_frontend.users.length){
-          Adaptor.updateGameTurn(game_id, game_frontend.turns++)
+          Adaptor.updateGameTurn(game_id)
           .then(res => App.handleTurn(game_id));
         } else {
 
