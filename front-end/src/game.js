@@ -7,7 +7,7 @@ class Game {
     this.users = obj.users
     this.cards = obj.cards
     this.num_of_players = obj.num_of_players
-    this.turns = this.num_of_players
+    this.turns = obj.turns
     gameStore.push(this)
   }
 
