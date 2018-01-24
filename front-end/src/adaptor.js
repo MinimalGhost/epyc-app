@@ -1,6 +1,6 @@
 const Adaptor = (function() {
 
-  const BASE_URL = `http://localhost:3000/api/v1`
+  const BASE_URL = `http://5c697064.ngrok.io/api/v1`
 
   return class Adaptor {
 
@@ -76,7 +76,7 @@ const Adaptor = (function() {
       .then(resp => {
         Adaptor.getGameStatus(game_id)
         Adaptor.createCard(resp.id)
-        App.gameLobby(game_id)
+        App.gameLobby(game_id, resp.id)
       })
     }
 
@@ -91,11 +91,10 @@ const Adaptor = (function() {
         .then(data => {
 
           if (data.status === "in progress") {
-            console.log(data)
             // start the game
             // doSomethingWithData()
 
-            App.renderSentence(game_id);
+            App.renderSentenceForm(game_id);
           } else {
             // If your response data doesn't fulfill the condition, then
             // call getGameStatus again recursively.
@@ -141,6 +140,41 @@ const Adaptor = (function() {
       }).then(res => res.json())
       .then(res => new Card(res))
     }
+
+    static submitEntry(input, user_id, card_id) {
+      fetch(`${BASE_URL}/entries`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          input: `${input}`,
+          user_id: `${user_id}`,
+          card_id: `${card_id}`
+        })
+      }).then( res => res.json())
+      .then( entryData => new Entry(entryData) )
+    }
+
+    static getGameUsers(game_id) {
+      fetch(`${BASE_URL}/users`)
+        .then( res => res.json())
+        .then(userData => {
+          let gameUsers = userData.filter( user => user.game_id === game_id)
+          let allEntries = gameUsers.forEach( user => Adaptor.getUserEntries(user.id))
+          console.log(allEntries)
+        })
+      }
+
+    static getUserEntries(user_id) {
+       fetch(`${BASE_URL}/entries`)
+        .then(res => res.json())
+        .then( entriesData => {
+          let userEntries = entriesData.filter( entry => entry.user_id === user_id)
+        })
+    }
+
 
 
 

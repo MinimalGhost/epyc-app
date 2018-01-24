@@ -72,13 +72,15 @@ class App {
 
 
 
-  static gameLobby(game_id){
-
+  static gameLobby(game_id, user_id){
+    // let card_id = cardStore.filter( card => card.user_id == user_id)
     let current_game = gameStore.filter(game => game.id === parseInt(game_id))[0]
     let users = userStore.filter(user => user.game_id === parseInt(game_id))
     // need to find a way to calculate number of players in the game
 
     let main_body_div = document.getElementsByClassName("container")[0]
+    main_body_div.dataset.user = user_id
+    // main_body_div.dataset.card = card_id[0].id
     main_body_div.innerHTML = ''
 
     let game_view = document.createElement("div")
@@ -136,6 +138,7 @@ class App {
 
   static handleTurn(game_id){
     setTimeout(function(){
+      let game = gameStore.filter(game => game.id == game_id)[0]
       // FIRST SUBMIT THE FIRST ROUND OF THE Sentence
       // if all people submit a sentence
       // then submit, and increment the turn
@@ -150,10 +153,12 @@ class App {
 
     // need our conditional regarding turns and which sentence / canvas
 
-  static renderSentence(game_id){
+  static renderSentenceForm(game_id){
     let game = gameStore.filter(game => game.id == game_id)[0]
 
     let main_body_div = document.getElementsByClassName("container")[0]
+    let card_id = cardStore.filter( card => card.user_id == main_body_div.dataset.user )
+    main_body_div.dataset.card = card_id[0].id
     main_body_div.innerHTML = ''
 
     let game_view = document.createElement("div")
@@ -164,7 +169,8 @@ class App {
 
     let sentence_form = document.createElement("form")
     sentence_form.innerHTML =
-    `<input type="hidden" name="game_id" value=${game_id}>
+    `<input type="hidden" name="user_id" value=${main_body_div.dataset.user}>
+    <input type="hidden" name="card_id" value=${main_body_div.dataset.card}>
     <input type="text" name="sentence" placeholder="Type Your Sentence"><br>
     <input type="submit" id="submit-sentence-button" value="Submit Sentence">
     `
