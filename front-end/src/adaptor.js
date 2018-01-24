@@ -28,19 +28,6 @@ const Adaptor = (function() {
       })
     }
 
-    // static updateGame(status, game_id) {
-    //   fetch(`${BASE_URL}/games/${game_id}`, {
-    //     method: "PATCH",
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       status: `${status}`
-    //     })
-    //   }).then(res => res.json())
-    //   .then(res => console.log(res))
-    // }
 
     static getCards() {
       fetch(`${BASE_URL}/cards`)
