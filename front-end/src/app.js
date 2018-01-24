@@ -36,8 +36,8 @@ class App {
 
   static handleGameEvents(event){
     event.preventDefault();
-    console.log(event)
 
+    let main_body_div = document.getElementsByClassName("container")[0]
     if(event.target.id === "submit-sentence-button"){
       let game_div = document.getElementById("game-div")
       let card_id = main_body_div.dataset.card
