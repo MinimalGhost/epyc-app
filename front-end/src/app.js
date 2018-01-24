@@ -40,8 +40,8 @@ class App {
 
     if(event.target.id === "submit-sentence-button"){
       let game_div = document.getElementById("game-div")
-      let card_id = game_div.dataset.card
-      let user_id = game_div.dataset.user
+      let card_id = main_body_div.dataset.card
+      let user_id = main_body_div.dataset.user
       let input = document.getElementById("sentence-form").elements[2].value
       console.log(card_id, user_id, input)
       App.getTurnCompleted(input, user_id, card_id)
@@ -126,7 +126,7 @@ class App {
     // need to find a way to calculate number of players in the game
 
     let game_div = document.getElementById("game-div")
-    game_div.dataset.user = user_id
+    main_body_div.dataset.user = user_id
     // game_div.dataset.card = card_id[0].id
     game_div.innerHTML = ''
 
@@ -165,12 +165,13 @@ class App {
   static renderSentenceForm(game_id){
     let game = gameStore.filter(game => game.id == game_id)[0]
 
-    // let main_body_div = document.getElementsByClassName("container")[0]
+    let main_body_div = document.getElementsByClassName("container")[0]
     let game_div = document.getElementById("game-div")
     game_div.innerHTML = ''
 
-    let card_id = cardStore.filter( card => card.user_id == game_div.dataset.user )
-    game_div.dataset.card = card_id[0].id
+    let card_id = cardStore.filter( card => card.user_id == main_body_div.dataset.user )
+    debugger
+    main_body_div.dataset.card = card_id[0].id
     game_div.innerHTML = ''
 
     let game_view = document.createElement("div")
@@ -182,8 +183,8 @@ class App {
     let sentence_form = document.createElement("form")
     sentence_form.id = "sentence-form"
     sentence_form.innerHTML =
-    `<input type="hidden" name="user_id" value=${game_div.dataset.user}>
-    <input type="hidden" name="card_id" value=${game_div.dataset.card}>
+    `<input type="hidden" name="user_id" value=${main_body_div.dataset.user}>
+    <input type="hidden" name="card_id" value=${main_body_div.dataset.card}>
     <input type="text" name="sentence" placeholder="Type Your Sentence"><br>
     <input type="submit" id="submit-sentence-button" value="Submit Sentence">
     `
