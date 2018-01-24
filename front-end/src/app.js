@@ -44,6 +44,7 @@ class App {
       let user_id = main_body_div.dataset.user
       let input = document.getElementById("sentence-form").elements[2].value
       console.log(card_id, user_id, input)
+      Adaptor.createEntry(input, user_id, card_id)
       App.getTurnCompleted(input, user_id, card_id)
     }
 
@@ -195,7 +196,6 @@ class App {
   static getTurnCompleted(input, user_id, card_id){
     let game_id = document.getElementsByClassName("container")[0].dataset.game
     let game_frontend = gameStore.filter(game => game.id === parseInt(game_id))[0]
-    Adaptor.createEntry(input, user_id, card_id)
 
     setTimeout(function(){
       let game_entries = [].concat.apply([], game_frontend.cards.map(card => card.entries))
