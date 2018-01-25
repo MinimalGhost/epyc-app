@@ -215,6 +215,8 @@ class App {
   static getTurnCompleted(input, user_id, card_id){
     let game_id = document.getElementsByClassName("container")[0].dataset.game
     let game_frontend = gameStore.filter(game => game.id === parseInt(game_id))[0]
+    console.log("turns", game_frontend.turns)
+    console.log("users length", game_frontend.users.length)
 
     setTimeout(function(){
       let game_entries = [].concat.apply([], game_frontend.cards.map(card => card.entries))
@@ -222,7 +224,7 @@ class App {
 
       Adaptor.updateGameState(game_id).then(resp =>{
         // this conditional will need to change based on the users*turn
-        if(game_entries.length === game_frontend.users.length*game_frontend.turns){
+        if(game_entries.length === (game_frontend.users.length*game_frontend.turns-1)){
           App.handleTurn(game_id);
         } else {
           Adaptor.updateGameState(game_id).then(resp =>{
