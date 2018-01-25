@@ -152,22 +152,21 @@ class App {
 
   static handleTurn(game_id){
     console.log("YAY")
-    let game_div = document.getElementById("game-div")
-    game_div.innerHTML = ''
+    // App.renderCanvasForm(game_id)
 
-    let canvas_div = document.getElementById("canvas-div")
-    canvas_div.style.display = "block";
-    init();
-
-    // let game = gameStore.filter(game => game.id == game_id)[0]
-    // if (game.turns === game.users.length){
-    //   // change the status of the game and render each users card
-    // } else if (game.turns % 2 === 0){
-    //   // render canvas form
-    // } else if (game.turns % 2 != 0){
-    //   // render sentence form
-    //   App.renderSentenceForm(game_id)
-    // }
+    let game = gameStore.filter(game => game.id == game_id)[0]
+    console.log("game-turns", game.turns)
+    console.log("users-length", game.users.length)
+    if (game.turns === game.users.length){
+      // change the status of the game and render each users card
+      App.renderGameComplete(game_id)
+    } else if (game.turns % 2 === 0){
+      // render canvas form
+      App.renderCanvasForm(game_id)
+    } else if (game.turns % 2 != 0){
+      // render sentence form
+      App.renderSentenceForm(game_id)
+    }
   }
 
     // need our conditional regarding turns and which sentence / canvas
@@ -223,6 +222,53 @@ class App {
     }, 1000);
   }
 
+
+  static renderGameComplete(game_id){
+    let game = gameStore.filter(game => game.id == game_id)[0]
+    let main_body_div = document.getElementsByClassName("container")[0]
+    let user = userStore.filter(user => user.id == main_body_div.dataset.user)[0]
+    let card = game.cards.filter(card => card.id == user.id)[0]
+    console.log(card)
+    let game_div = document.getElementById("game-div")
+    game_div.innerHTML = ''
+
+
+    let completed_div = document.createElement("div")
+    completed_div.innerHTML = `
+    <h3>Game Over!</h3>
+    <h4>Here's your card, ${user.name}. </h4>`
+
+    let card_div = document.createElement("div")
+
+    card.entries.forEach(entry => {
+      let entry_div = document.createElement("p")
+      entry_div.innerHTML = `${entry.input}`
+      card_div.append(entry_div)
+    })
+
+    completed_div.append(card_div)
+    game_div.append(completed_div)
+  }
+
+  static renderCanvasForm(game_id){
+    let game = gameStore.filter(game => game.id == game_id)[0]
+
+    let game_div = document.getElementById("game-div")
+    game_div.innerHTML = ''
+
+    let game_view = document.createElement("div")
+    game_view.className = "game-view"
+
+    game_view.innerHTML = `<h3> ${game.title} </h3>
+    <h4>Round ${game.turns}</h4>`
+
+    game_div.append(game_view)
+
+    let canvas_div = document.getElementById("canvas-div")
+    canvas_div.style.display = "block";
+    init();
+
+  }
 
 
 

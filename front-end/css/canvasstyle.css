@@ -1,43 +1,43 @@
 #canvas_area {
-  position:absolute;
+  position:static;
   top: 10%;
   left: 10%;
   border: 2px solid;
 }
 
 #choose_color_text {
-  position: absolute;
+  position: static;
   top: 12%;
   left: 43%;
 }
 
 #save_target {
-  position: absolute;
+  position: static;
   top: 10%;
   left: 52%;
   display: none;
 }
 
 #btn {
-  position: absolute;
+  position: static;
   top: 55%;
   left: 10%;
 }
 
 #eraser_text {
-  position: absolute;
+  position: static;
   top: 20%;
   left: 43%;
 }
 
 #clr {
-  position: absolute;
+  position: static;
   top: 55%;
   left: 15%;
 }
 
 #white {
-  position: absolute;
+  position: static;
   top: 22%;
   left: 45%;
   width: 15px;
@@ -47,7 +47,7 @@
 }
 
 #green {
-  position: absolute;
+  position: static;
   top: 15%;
   left: 45%;
   width: 10px;
@@ -56,7 +56,7 @@
 }
 
 #blue {
-  position: absolute;
+  position: static;
   top: 15%;
   left: 46%;
   width: 10px;
@@ -65,7 +65,7 @@
 }
 
 #red {
-  position: absolute;
+  position: static;
   top: 15%;
   left: 47%;
   width: 10px;
@@ -74,7 +74,7 @@
 }
 
 #yellow {
-  position: absolute;
+  position: static;
   top: 17%;
   left: 45%;
   width: 10px;
@@ -83,7 +83,7 @@
 }
 
 #orange {
-  position: absolute;
+  position: static;
   top: 17%;
   left: 46%;
   width: 10px;
@@ -92,7 +92,7 @@
 }
 
 #black {
-  position: absolute;
+  position: static;
   top: 17%;
   left: 47%;
   width: 10px;
