@@ -155,32 +155,31 @@ class App {
   }
 
   static handleTurn(game_id, user_id){
-    console.log("YAY")
     // App.renderCanvasForm(game_id)
-    let user = userStore.filter(user => user.id === user_id)[0]
-    console.log(`user is: ${user}`);
-    let game = gameStore.filter(game => game.id === game_id)[0]
-    console.log(`gameStore is: ${JSON.stringify(gameStore)}`);
-    console.log(`userStore is: ${JSON.stringify(userStore)}`);
-    console.log(`user_id is: ${JSON.stringify(user_id)}`);
+    let user = userStore.filter(user => user.id == user_id)[0]
+    // console.log(`user is: ${user}`);
+    let game = gameStore.filter(game => game.id == game_id)[0]
+    // console.log(`gameStore is: ${JSON.stringify(gameStore)}`);
+    // console.log(`userStore is: ${JSON.stringify(userStore)}`);
+    // console.log(`user_id is: ${JSON.stringify(user_id)}`);
 
-    console.log("game-turns", game.turns)
-    console.log("users-length", game.users.length)
+    // console.log("game-turns", game.turns)
+    // console.log("users-length", game.users.length)
     if (game.turns === (game.users.length + 1)){
       // change the status of the game and render each users card
       App.renderGameComplete(game_id)
     } else if (game.turns % 2 === 0){
 
       // show previous users entry
-      console.log('i am inside else handle turn');
-      console.log(`user inside else handle turn is ${JSON.stringify(user)}`);
-      let previousEntry = user.getLastEntry(game)
+      // console.log('i am inside else handle turn');
+      // console.log(`user inside else handle turn is ${JSON.stringify(user)}`);
+      let previousEntry = game.getLastEntry(user)
       // render canvas form
       App.renderCanvasForm(game_id, previousEntry)
     } else if (game.turns % 2 != 0){
 
       // show previous users entry
-      let previousEntry = user.getLastEntry(game)
+      let previousEntry = game.getLastEntry(user)
       // render sentence form
       App.renderSentenceForm(game_id, previousEntry)
     }

@@ -24,6 +24,10 @@ class Game {
 
   }
 
+  getLastEntry(user) {
+    let user_entries = [].concat.apply([], this.entries.filter(entry => entry.user_id == user.id))
+  }
+
   // static checkGamesStatus(){
   //
   //   return gameStore.forEach(function(game){
