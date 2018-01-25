@@ -7,4 +7,5 @@ class Entry {
     this.card_id = card_id
     entryStore.push(this)
   }
+
 }

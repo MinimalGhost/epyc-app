@@ -39,18 +39,19 @@ class App {
     event.preventDefault();
     let game_div = document.getElementById("game-div")
     let main_body_div = document.getElementsByClassName("container")[0]
-    let card_id = main_body_div.dataset.card
+    // let card_id = main_body_div.dataset.card
     let user_id = main_body_div.dataset.user
 
 
     if(event.target.id === "submit-sentence-button"){
       let input = document.getElementById("sentence-form").elements[2].value
-      console.log(card_id, user_id, input)
+      let card_id = document.getElementById("sentence-form").elements[1].value
       Adaptor.createEntry(input, user_id, card_id)
       App.getTurnCompleted(input, user_id, card_id)
 
     } else if (event.target.id === "save-image-btn"){
       console.log("im in the save for an image")
+      let card_id = document.getElementById("save-image-btn").dataset.card
         let input = save()
         console.log(input)
         Adaptor.createEntry(input, user_id, card_id)
@@ -166,7 +167,6 @@ class App {
       // show previous users entry
       let previousEntry = game.getLastEntry(user)
       // render canvas form
-      debugger
       App.renderCanvasForm(game_id, previousEntry)
     } else if (game.turns % 2 != 0){
 
@@ -229,11 +229,14 @@ class App {
     game_view.innerHTML = `<h3> ${game.title} </h3>
     <h4>Round ${game.turns}</h4>`
 
+    let prev_entry = App.renderEntry(entry)
+    game_view.append(prev_entry)
+
     let sentence_form = document.createElement("form")
     sentence_form.id = "sentence-form"
     sentence_form.innerHTML =
     `<input type="hidden" name="user_id" value=${main_body_div.dataset.user}>
-    <input type="hidden" name="card_id" value=${main_body_div.dataset.card}>
+    <input type="hidden" name="card_id" value=${entry.card_id}>
     <input type="text" name="sentence" placeholder="Type Your Sentence"><br>
     <input type="submit" id="submit-sentence-button" value="Submit Sentence">
     `
@@ -283,8 +286,14 @@ class App {
     let card_div = document.createElement("div")
 
     card.entries.forEach(entry => {
-      let entry_div = document.createElement("p")
-      entry_div.innerHTML = `${entry.input}`
+      let entry_div;
+      if (entry.input.includes("data:image/png;")) {
+         entry_div = document.createElement('img')
+         entry_div.src = entry.input
+      } else {
+        entry_div = document.createElement('p')
+        entry_div.innerText = `${entry.input}`
+      }
       card_div.append(entry_div)
     })
 
@@ -292,7 +301,7 @@ class App {
     game_div.append(completed_div)
   }
 
-  static renderCanvasForm(game_id){
+  static renderCanvasForm(game_id, entry){
     let game = gameStore.filter(game => game.id == game_id)[0]
 
     let game_div = document.getElementById("game-div")
@@ -305,6 +314,8 @@ class App {
     <h4>Round ${game.turns}</h4>`
 
     game_div.append(game_view)
+    let prev_entry = App.renderEntry(entry)
+    game_view.append(prev_entry)
 
     let canvas_div = document.createElement("canvas-div")
     canvas_div.innerHTML = `
@@ -319,15 +330,47 @@ class App {
       <div id="black" onclick="color(this)"></div>
       <!-- eraser -->
       <div id="eraser_text">Eraser</div>
-      <div id="white" onclick="color(this)"></div>
+      <div id="white" onclick="color(this)"></div>`
+
+
       <!-- location and button for displaying saved canvas -->
-      <img id="save_target" />
-      <input type="button" value="save" id="save-image-btn" size="30" onclick="save()">
-      <!-- clear canvas button -->
-      <input type="button" value="clear" id="clr" size="23" onclick="erase()">`
+      // <img id="save_target" />
+      // <input type="button" value="save" id="save-image-btn" size="30" onclick="save()">
+      // <!-- clear canvas button -->
+      // <input type="button" value="clear" id="clr" size="23" onclick="erase()">`
+      let submitImgButton = document.createElement('button')
+      submitImgButton.type = "button"
+      submitImgButton.value = "save"
+      submitImgButton.id = "save-image-btn"
+      submitImgButton.dataset.card = entry.card_id
+      submitImgButton.size = "30"
+
+      canvas_div.append(submitImgButton)
+
+      let clearImgButton = document.createElement('button')
+      clearImgButton.type = "button"
+      clearImgButton.value = "clear"
+      clearImgButton.id = "clr"
+      clearImgButton.size = "23"
+      clearImgButton.onclick = "erase()"
+
+      canvas_div.append(clearImgButton)
 
     game_div.append(canvas_div)
     init();
 
+  }
+
+  static renderEntry(entry) {
+    let entryElement;
+
+    if (entry.input.includes("data:image/png;")) {
+       entryElement = document.createElement('img')
+       entryElement.src = entry.input
+    } else {
+      entryElement = document.createElement('p')
+      entryElement.innerText = `${entry.input}`
+    }
+    return entryElement
   }
 }

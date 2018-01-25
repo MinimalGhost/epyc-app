@@ -64,10 +64,10 @@ function erase() {
 /*  temporary save feature, returns a data URI containing a representation
     of the image in PNG format and renders it on the page next to canvas.  */
 function save() {
-  document.getElementById('save_target').style.border = '2px solid';
+  // document.getElementById('save_target').style.border = '2px solid';
   let dataURL = canvas.toDataURL();
-  document.getElementById('save_target').src = dataURL;
-  document.getElementById('save_target').style.display = 'inline';
+  // document.getElementById('save_target').src = dataURL;
+  // document.getElementById('save_target').style.display = 'inline';
   return dataURL
 }
 
