@@ -152,7 +152,22 @@ class App {
 
   static handleTurn(game_id){
     console.log("YAY")
+    let game_div = document.getElementById("game-div")
+    game_div.innerHTML = ''
 
+    let canvas_div = document.getElementById("canvas-div")
+    canvas_div.style.display = "block";
+    init();
+
+    // let game = gameStore.filter(game => game.id == game_id)[0]
+    // if (game.turns === game.users.length){
+    //   // change the status of the game and render each users card
+    // } else if (game.turns % 2 === 0){
+    //   // render canvas form
+    // } else if (game.turns % 2 != 0){
+    //   // render sentence form
+    //   App.renderSentenceForm(game_id)
+    // }
   }
 
     // need our conditional regarding turns and which sentence / canvas
@@ -164,6 +179,7 @@ class App {
     let game_div = document.getElementById("game-div")
     game_div.innerHTML = ''
 
+    // can this code below happen in the game lobby?
     let card_id = cardStore.filter( card => card.user_id == main_body_div.dataset.user )
 
     main_body_div.dataset.card = card_id[0].id
@@ -198,8 +214,7 @@ class App {
       Adaptor.updateGameState(game_id).then(resp =>{
         // this conditional will need to change based on the users*turn
         if(game_entries.length === game_frontend.users.length){
-          Adaptor.updateGameTurn(game_id)
-          .then(res => App.handleTurn(game_id));
+          App.handleTurn(game_id);
         } else {
 
           App.getTurnCompleted(input, user_id, card_id)
