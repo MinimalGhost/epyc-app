@@ -166,6 +166,7 @@ class App {
     let game = gameStore.filter(game => game.id == game_id)[0]
     console.log("game-turns", game.turns)
     console.log("users-length", game.users.length)
+
     if (game.turns === (game.users.length + 1)){
       // change the status of the game and render each users card
       App.renderGameComplete(game_id)
@@ -224,8 +225,9 @@ class App {
         if(game_entries.length === game_frontend.users.length){
           App.handleTurn(game_id);
         } else {
-
-          App.getTurnCompleted(input, user_id, card_id)
+          Adaptor.updateGameState(game_id).then(resp =>{
+            App.getTurnCompleted(input, user_id, card_id)
+          })
         }
       })
     }, 1000);
