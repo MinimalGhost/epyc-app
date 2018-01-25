@@ -25,7 +25,7 @@ class Game {
   }
 
   getLastEntry(user) {
-    let user_entries = [].concat.apply([], this.entries.filter(entry => entry.user_id == user.id))
+    return this.cards.filter(card => card.user_id == user.id)[0].entries
   }
 
   // static checkGamesStatus(){
