@@ -1,6 +1,6 @@
 const Adaptor = (function() {
 
-  const BASE_URL = `http://0cd2c005.ngrok.io/api/v1`
+  const BASE_URL = `http://35d14088.ngrok.io/api/v1`
 
 
   return class Adaptor {

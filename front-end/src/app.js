@@ -218,9 +218,9 @@ class App {
     game_div.innerHTML = ''
 
     // can this code below happen in the game lobby?
-    let card_id = cardStore.filter( card => card.user_id == main_body_div.dataset.user )
+    let card_id = entry.card_id
 
-    main_body_div.dataset.card = card_id[0].id
+    // main_body_div.dataset.card = card_id[0].id
     game_div.innerHTML = ''
 
     let game_view = document.createElement("div")
