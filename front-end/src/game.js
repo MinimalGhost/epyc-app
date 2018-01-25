@@ -35,10 +35,12 @@ class Game {
     if (userIndex == 0) {
       // return the entry of user at gameUsers.length - 1
       previousUser = currentUsers[currentUsers.length - 1]
+      console.log(`this is previous user in if blcok: ${previousUser}`)
       previousEntry = this.cards.filter(card => card.user_id == previousUser.id)[0].entries.slice(-1)[0]
     } else {
       // return the entry of the previous user index
       previousUser = currentUsers[userIndex - 1]
+      console.log(`this is previous user in else block: ${previousUser}`)
       previousEntry = this.cards.filter(card => card.user_id == previousUser.id)[0].entries.slice(-1)[0]
     }
     return previousEntry

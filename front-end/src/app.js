@@ -165,11 +165,13 @@ class App {
       App.renderGameComplete(game_id)
     } else if (game.turns % 2 === 0){
       // show previous users entry
+      // debugger
       let previousEntry = game.getLastEntry(user)
+
       // render canvas form
       App.renderCanvasForm(game_id, previousEntry)
     } else if (game.turns % 2 != 0){
-
+      // debugger
       // show previous users entry
       let previousEntry = game.getLastEntry(user)
       // render sentence form
