@@ -158,24 +158,6 @@ const Adaptor = (function() {
       })
     }
 
-    static updateGameTurn(game_id){
-      let turn = parseInt(gameStore.filter(game => game.id == game_id)[0].turns)
-      console.log("This turn is what we are sending to the patch", turn)
-      console.log("game_id", game_id)
-      return fetch(`${BASE_URL}/games/${game_id}`, {
-        method: "PATCH",
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          turns: ++turn
-        })
-      }).then(res => { return res.json()})
-      .then(res => {
-        Adaptor.updateGameState(game_id)
-      })
-    }
 
   }
 
