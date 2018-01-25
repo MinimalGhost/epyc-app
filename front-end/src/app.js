@@ -166,7 +166,6 @@ class App {
     let game = gameStore.filter(game => game.id == game_id)[0]
     console.log("game-turns", game.turns)
     console.log("users-length", game.users.length)
-
     if (game.turns === (game.users.length + 1)){
       // change the status of the game and render each users card
       App.renderGameComplete(game_id)
@@ -215,8 +214,6 @@ class App {
   static getTurnCompleted(input, user_id, card_id){
     let game_id = document.getElementsByClassName("container")[0].dataset.game
     let game_frontend = gameStore.filter(game => game.id === parseInt(game_id))[0]
-    console.log("turns", game_frontend.turns)
-    console.log("users length", game_frontend.users.length)
 
     setTimeout(function(){
       let game_entries = [].concat.apply([], game_frontend.cards.map(card => card.entries))
@@ -224,12 +221,11 @@ class App {
 
       Adaptor.updateGameState(game_id).then(resp =>{
         // this conditional will need to change based on the users*turn
-        if(game_entries.length === (game_frontend.users.length*game_frontend.turns-1)){
+        if(game_entries.length === game_frontend.users.length){
           App.handleTurn(game_id);
         } else {
-          Adaptor.updateGameState(game_id).then(resp =>{
-            App.getTurnCompleted(input, user_id, card_id)
-          })
+
+          App.getTurnCompleted(input, user_id, card_id)
         }
       })
     }, 1000);
@@ -291,11 +287,9 @@ class App {
       <!-- eraser -->
       <div id="eraser_text">Eraser</div>
       <div id="white" onclick="color(this)"></div>
-
       <!-- location and button for displaying saved canvas -->
       <img id="save_target" />
       <input type="button" value="save" id="save-image-btn" size="30" onclick="save()">
-
       <!-- clear canvas button -->
       <input type="button" value="clear" id="clr" size="23" onclick="erase()">`
 
