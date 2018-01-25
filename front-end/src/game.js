@@ -12,7 +12,7 @@ class Game {
   }
 
   getUsers(){
-    return userStore.filter(user => user.game_id === this.id)
+    // return userStore.filter(user => user.game_id === this.id)
   }
 
   getGameCards(){
@@ -25,7 +25,23 @@ class Game {
   }
 
   getLastEntry(user) {
-    return this.cards.filter(card => card.user_id == user.id)[0].entries
+    let currentUsers = this.users
+    let foundUser = currentUsers.find(u => u.id === user.id)
+    let userIndex = currentUsers.indexOf(foundUser)
+    let previousUser;
+    let previousEntry;
+    // return this.cards.filter(card => card.user_id == user.id)[0].entries
+    console.log(`userIndex: ${userIndex}`);
+    if (userIndex == 0) {
+      // return the entry of user at gameUsers.length - 1
+      previousUser = currentUsers[currentUsers.length - 1]
+      previousEntry = this.cards.filter(card => card.user_id == previousUser.id)[0].entries.slice(-1)
+    } else {
+      // return the entry of the previous user index
+      previousUser = currentUsers[userIndex - 1]
+      previousEntry = this.cards.filter(card => card.user_id == previousUser.id)[0].entries.slice(-1)
+    }
+    return previousEntry
   }
 
   // static checkGamesStatus(){

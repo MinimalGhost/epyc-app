@@ -106,7 +106,7 @@ class App {
 
     pendingGames.forEach(function(game){
       let gameP = document.createElement("p")
-      gameP.innerHTML = `${game.title}: ${game.num_of_players - game.getUsers().length} spot(s) available`
+      gameP.innerHTML = `${game.title}: ${game.num_of_players - game.users.length} spot(s) available`
 
 
       let joinButton = document.createElement("button")
@@ -165,8 +165,8 @@ class App {
     } else if (game.turns % 2 === 0){
       // show previous users entry
       let previousEntry = game.getLastEntry(user)
-      debugger
       // render canvas form
+      debugger
       App.renderCanvasForm(game_id, previousEntry)
     } else if (game.turns % 2 != 0){
 
