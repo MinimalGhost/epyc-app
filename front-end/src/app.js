@@ -7,6 +7,7 @@ class App {
 
     let game_div = document.getElementById("game-div")
     game_div.addEventListener("click", App.handleGameEvents)
+
   }
 
 
@@ -36,16 +37,24 @@ class App {
 
   static handleGameEvents(event){
     event.preventDefault();
-
+    let game_div = document.getElementById("game-div")
     let main_body_div = document.getElementsByClassName("container")[0]
+    let card_id = main_body_div.dataset.card
+    let user_id = main_body_div.dataset.user
+
+
     if(event.target.id === "submit-sentence-button"){
-      let game_div = document.getElementById("game-div")
-      let card_id = main_body_div.dataset.card
-      let user_id = main_body_div.dataset.user
       let input = document.getElementById("sentence-form").elements[2].value
       console.log(card_id, user_id, input)
       Adaptor.createEntry(input, user_id, card_id)
       App.getTurnCompleted(input, user_id, card_id)
+
+    } else if (event.target.id === "save-image-btn"){
+      console.log("im in the save for an image")
+        let input = save()
+        console.log(input)
+        Adaptor.createEntry(input, user_id, card_id)
+        App.getTurnCompleted(input, user_id, card_id)
     }
 
   }
@@ -157,7 +166,7 @@ class App {
     let game = gameStore.filter(game => game.id == game_id)[0]
     console.log("game-turns", game.turns)
     console.log("users-length", game.users.length)
-    if (game.turns === game.users.length){
+    if (game.turns === (game.users.length + 1)){
       // change the status of the game and render each users card
       App.renderGameComplete(game_id)
     } else if (game.turns % 2 === 0){
@@ -264,8 +273,29 @@ class App {
 
     game_div.append(game_view)
 
-    let canvas_div = document.getElementById("canvas-div")
-    canvas_div.style.display = "block";
+    let canvas_div = document.createElement("canvas-div")
+    canvas_div.innerHTML = `
+    <canvas id="canvas_area" width="400" height="400"></canvas>
+    <!-- color palette -->
+      <div id="choose_color_text">Choose Color</div>
+      <div id="green" onclick="color(this)"></div>
+      <div id="blue" onclick="color(this)"></div>
+      <div id="red" onclick="color(this)"></div>
+      <div id="yellow" onclick="color(this)"></div>
+      <div id="orange" onclick="color(this)"></div>
+      <div id="black" onclick="color(this)"></div>
+      <!-- eraser -->
+      <div id="eraser_text">Eraser</div>
+      <div id="white" onclick="color(this)"></div>
+
+      <!-- location and button for displaying saved canvas -->
+      <img id="save_target" />
+      <input type="button" value="save" id="save-image-btn" size="30" onclick="save()">
+
+      <!-- clear canvas button -->
+      <input type="button" value="clear" id="clr" size="23" onclick="erase()">`
+
+    game_div.append(canvas_div)
     init();
 
   }

@@ -1,7 +1,7 @@
 class Entry < ApplicationRecord
   belongs_to :user
   belongs_to :card
-  before_save :update_turn
+  after_save :update_turn
 
   def update_turn
     game = self.user.game

@@ -68,6 +68,7 @@ function save() {
   let dataURL = canvas.toDataURL();
   document.getElementById('save_target').src = dataURL;
   document.getElementById('save_target').style.display = 'inline';
+  return dataURL
 }
 
 /*  the big kahuna burger function uses draw helper method
