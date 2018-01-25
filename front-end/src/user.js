@@ -17,6 +17,7 @@ class User {
     // user = userStore.filter(user => user.id == main_body_div.dataset.user)
 
     let gameUsers = game.getUsers()
+    console.log(`user is: ${this}, gameUsers is: ${gameUsers}`);
     let userIndex = gameUsers.findIndex(this)
 
     if (userIndex == 0) {
