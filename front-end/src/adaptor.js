@@ -1,6 +1,6 @@
 const Adaptor = (function() {
 
-  const BASE_URL = `http://localhost:3000/api/v1`
+  const BASE_URL = `http://5f58f335.ngrok.io/api/v1`
 
 
   return class Adaptor {
@@ -82,7 +82,7 @@ const Adaptor = (function() {
           if (data.status === "in progress") {
             // start the game
             // doSomethingWithData()
-            App.renderSentenceForm(game_id);
+            App.renderInitialSentenceForm(game_id);
           } else {
             // If your response data doesn't fulfill the condition, then
             // call getGameStatus again recursively.

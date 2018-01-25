@@ -59,10 +59,6 @@ class App {
 
   }
 
-
-
-
-
   static renderGameForm(){
     let pre_game_div = document.getElementById("pre-game")
     pre_game_div.innerHTML = ''
@@ -158,11 +154,10 @@ class App {
 
   }
 
-
-  static handleTurn(game_id){
+  static handleTurn(game_id, user_id){
     console.log("YAY")
     // App.renderCanvasForm(game_id)
-
+    let user = gameStore.filter(user => user.id == user_id)[0]
     let game = gameStore.filter(game => game.id == game_id)[0]
     console.log("game-turns", game.turns)
     console.log("users-length", game.users.length)
@@ -170,17 +165,21 @@ class App {
       // change the status of the game and render each users card
       App.renderGameComplete(game_id)
     } else if (game.turns % 2 === 0){
+      // show previous users entry
+      let previousEntry = user.getLastEntry(game)
       // render canvas form
-      App.renderCanvasForm(game_id)
+      App.renderCanvasForm(game_id, previousEntry)
     } else if (game.turns % 2 != 0){
+      // show previous users entry
+      let previousEntry = user.getLastEntry(game)
       // render sentence form
-      App.renderSentenceForm(game_id)
+      App.renderSentenceForm(game_id, previousEntry)
     }
   }
 
     // need our conditional regarding turns and which sentence / canvas
 
-  static renderSentenceForm(game_id){
+  static renderInitialSentenceForm(game_id){
     let game = gameStore.filter(game => game.id == game_id)[0]
 
     let main_body_div = document.getElementsByClassName("container")[0]
@@ -211,20 +210,54 @@ class App {
     game_div.append(game_view)
   }
 
+  static renderSentenceForm(game_id, entry){
+    let game = gameStore.filter(game => game.id == game_id)[0]
+
+    let main_body_div = document.getElementsByClassName("container")[0]
+    let game_div = document.getElementById("game-div")
+    game_div.innerHTML = ''
+
+    // can this code below happen in the game lobby?
+    let card_id = cardStore.filter( card => card.user_id == main_body_div.dataset.user )
+
+    main_body_div.dataset.card = card_id[0].id
+    game_div.innerHTML = ''
+
+    let game_view = document.createElement("div")
+    game_view.className = "game-view"
+
+    game_view.innerHTML = `<h3> ${game.title} </h3>
+    <h4>Round ${game.turns}</h4>`
+
+    let sentence_form = document.createElement("form")
+    sentence_form.id = "sentence-form"
+    sentence_form.innerHTML =
+    `<input type="hidden" name="user_id" value=${main_body_div.dataset.user}>
+    <input type="hidden" name="card_id" value=${main_body_div.dataset.card}>
+    <input type="text" name="sentence" placeholder="Type Your Sentence"><br>
+    <input type="submit" id="submit-sentence-button" value="Submit Sentence">
+    `
+    game_view.append(sentence_form)
+    game_div.append(game_view)
+  }
+
+
   static getTurnCompleted(input, user_id, card_id){
     let game_id = document.getElementsByClassName("container")[0].dataset.game
     let game_frontend = gameStore.filter(game => game.id === parseInt(game_id))[0]
 
     setTimeout(function(){
-      let game_entries = [].concat.apply([], game_frontend.cards.map(card => card.entries))
-
 
       Adaptor.updateGameState(game_id).then(resp =>{
+        let game_entries = [].concat.apply([], game_frontend.cards.map(card => card.entries))
         // this conditional will need to change based on the users*turn
-        if(game_entries.length === game_frontend.users.length){
-          App.handleTurn(game_id);
+        if(game_entries.length === game_frontend.users.length * (game_frontend.turns - 1)){
+          console.log(`current entries: ${game_entries.length}`);
+          App.handleTurn(game_id, user_id);
         } else {
-
+          console.log(`current game entries: ${game_entries.length}`);
+          console.log(`current conditional checker: ${game_frontend.users.length * (game_frontend.turns - 1)}`);
+          console.log(`i'm in updateGameState else`);
           App.getTurnCompleted(input, user_id, card_id)
         }
       })
@@ -297,8 +330,4 @@ class App {
     init();
 
   }
-
-
-
-
 }
