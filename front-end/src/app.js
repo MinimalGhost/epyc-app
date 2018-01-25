@@ -222,7 +222,7 @@ class App {
 
       Adaptor.updateGameState(game_id).then(resp =>{
         // this conditional will need to change based on the users*turn
-        if(game_entries.length === game_frontend.users.length){
+        if(game_entries.length === game_frontend.users.length*game_frontend.turns){
           App.handleTurn(game_id);
         } else {
           Adaptor.updateGameState(game_id).then(resp =>{
