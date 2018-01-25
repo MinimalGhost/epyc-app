@@ -334,12 +334,6 @@ class App {
       <div id="eraser_text">Eraser</div>
       <div id="white" onclick="color(this)"></div>`
 
-
-      <!-- location and button for displaying saved canvas -->
-      // <img id="save_target" />
-      // <input type="button" value="save" id="save-image-btn" size="30" onclick="save()">
-      // <!-- clear canvas button -->
-      // <input type="button" value="clear" id="clr" size="23" onclick="erase()">`
       let submitImgButton = document.createElement('button')
       submitImgButton.type = "button"
       submitImgButton.value = "save"
@@ -365,7 +359,7 @@ class App {
 
   static renderEntry(entry) {
     let entryElement;
-
+    debugger
     if (entry.input.includes("data:image/png;")) {
        entryElement = document.createElement('img')
        entryElement.src = entry.input

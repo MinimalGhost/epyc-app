@@ -36,14 +36,16 @@ class Game {
       // return the entry of user at gameUsers.length - 1
       previousUser = currentUsers[currentUsers.length - 1]
       console.log(`this is previous user in if blcok: ${JSON.stringify(previousUser)}`)
-      previousEntry = [].concat.apply([], this.cards.map(card => card.entries)).filter(entry => entry.user_id === previousUser.id).sort(compare).slice(-1)
+      previousEntry = [].concat.apply([], this.cards.map(card => card.entries)).filter(entry => entry.user_id === previousUser.id).sort(compare).slice(-1)[0]
+      debugger
 
       console.log(`this is previous entry in if blcok: ${JSON.stringify(previousEntry)}`)
     } else {
       // return the entry of the previous user index
       previousUser = currentUsers[userIndex - 1]
       console.log(`this is previous user in else block: ${JSON.stringify(previousUser)}`)
-      previousEntry = [].concat.apply([], this.cards.map(card => card.entries)).filter(entry => entry.user_id === previousUser.id).sort(compare).slice(-1)
+      previousEntry = [].concat.apply([], this.cards.map(card => card.entries)).filter(entry => entry.user_id === previousUser.id).sort(compare).slice(-1)[0]
+      debugger
 
       console.log(`this is previous entry in if blcok: ${JSON.stringify(previousEntry)}`)
     }
