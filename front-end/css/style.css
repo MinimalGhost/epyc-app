@@ -1,3 +1,56 @@
+body {
+  font-family: 'Raleway', sans-serif;
+  font-size: 17px;
+}
+
 #canvas-div{
   display: none;
+}
+
+#title {
+  font-family: 'Indie Flower', cursive;
+  font-size: 45px;
+}
+
+#pre-game, #title {
+  text-align: center;
+}
+
+#game-div {
+  text-align: center;
+}
+
+#game-div ul {
+  list-style: none;
+}
+
+#game-lobby {
+  text-align: center;
+}
+
+.btn {
+  background: #30acff;
+  background-image: -webkit-linear-gradient(top, #30acff, #2b8ecc);
+  background-image: -moz-linear-gradient(top, #30acff, #2b8ecc);
+  background-image: -ms-linear-gradient(top, #30acff, #2b8ecc);
+  background-image: -o-linear-gradient(top, #30acff, #2b8ecc);
+  background-image: linear-gradient(to bottom, #30acff, #2b8ecc);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 15px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
 }

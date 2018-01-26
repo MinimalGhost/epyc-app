@@ -76,7 +76,7 @@ class App {
     <input type="text" name="title" placeholder="Game Title"><br>
     <label for="num_of_players">Number of Players</label>
       <input type="number" name="num_of_players" placeholder="Number of Players"><br>
-      <input type="submit" id="submit-new-game-button" name="start" value="Start New Game">`
+      <input type="submit" id="submit-new-game-button" name="start" value="Start New Game" class="btn">`
     pre_game_div.append(new_game_form)
   }
 
@@ -91,7 +91,7 @@ class App {
     `<p>Please enter your name to begin!</p>
     <input type="hidden" name="game_id" value=${game_id}>
     <input type="text" name="user" placeholder="Name"><br>
-    <input type="submit" id="submit-new-user-button" value="Submit Name">`
+    <input type="submit" id="submit-new-user-button" class="btn" value="Submit Name">`
 
     pre_game_div.append(new_user_form)
   }
