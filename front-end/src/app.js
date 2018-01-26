@@ -28,7 +28,9 @@ class App {
       let new_user = document.getElementById("submit-new-user-button").parentNode.user.value
       let game_id = document.getElementById("submit-new-user-button").parentNode.game_id.value
       Adaptor.createNewUser(new_user, game_id);
+
     } else if(event.target.className === "join-game-id-button"){
+      toggleListRefresh = false;
       let game_id = event.target.dataset.id
       App.renderNewUser(game_id)
     }

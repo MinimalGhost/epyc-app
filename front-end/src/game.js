@@ -3,11 +3,16 @@ class Game {
   constructor(obj) {
     this.id = obj.id
     this.title = obj.title
-    this.status = "pending"
     this.users = obj.users
     this.cards = obj.cards
     this.num_of_players = obj.num_of_players
     this.turns = obj.turns
+
+    if(obj.status){
+      this.status = obj.status
+    } else {
+      this.status = "pending"
+    }
     gameStore.push(this)
   }
 
