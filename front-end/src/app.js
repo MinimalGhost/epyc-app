@@ -30,7 +30,7 @@ class App {
       Adaptor.createNewUser(new_user, game_id);
 
     } else if(event.target.className === "join-game-id-button"){
-      toggleListRefresh = false;
+
       let game_id = event.target.dataset.id
       App.renderNewUser(game_id)
     }
@@ -196,8 +196,10 @@ class App {
 
     // can this code below happen in the game lobby?
     let card_id = cardStore.filter( card => card.user_id == main_body_div.dataset.user )
+    console.log(main_body_div.dataset.user)
 
     main_body_div.dataset.card = card_id[0].id
+
     game_div.innerHTML = ''
 
     let game_view = document.createElement("div")
@@ -311,6 +313,7 @@ class App {
 
     let game_div = document.getElementById("game-div")
     game_div.innerHTML = ''
+
 
     let game_view = document.createElement("div")
     game_view.className = "game-view"

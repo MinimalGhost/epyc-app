@@ -1,8 +1,6 @@
-let toggleListRefresh = true;
-
 const Adaptor = (function() {
 
-  const BASE_URL = `http://a6a0a75b.ngrok.io/api/v1`
+  const BASE_URL = `http://d428ea7a.ngrok.io/api/v1`
 
 
   return class Adaptor {
@@ -19,24 +17,16 @@ const Adaptor = (function() {
     }
 
     static getGames() {
-
-      setTimeout(function(){
-        gameStore = [];
-        fetch(`${BASE_URL}/games`)
-          .then( res => res.json())
-          .then(gameData => {
-            gameData.forEach(function(game) {
-              new Game(game)
-           })
-        }).then(res =>{
-          if (toggleListRefresh){
-            App.renderExistingGames()
-            Adaptor.getGames()
-          }
+      gameStore = [];
+      fetch(`${BASE_URL}/games`)
+        .then( res => res.json())
+        .then(gameData => {
+          gameData.forEach(function(game) {
+            new Game(game)
+         })
+          App.renderExistingGames()
         })
-      }, 1000)
-
-    }
+      }
 
 
     static getCards() {
