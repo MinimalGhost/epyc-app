@@ -34,47 +34,15 @@ class Game {
     if (userIndex == 0) {
       // return the entry of user at gameUsers.length - 1
       previousUser = currentUsers[currentUsers.length - 1]
-<<<<<<< HEAD
+
       previousEntry = [].concat.apply([], this.cards.map(card => card.entries)).filter(entry => entry.user_id === previousUser.id).sort(compare).slice(-1)[0]
     } else {
       // return the entry of the previous user index
       previousUser = currentUsers[userIndex - 1]
       previousEntry = [].concat.apply([], this.cards.map(card => card.entries)).filter(entry => entry.user_id === previousUser.id).sort(compare).slice(-1)[0]
-=======
-      // console.log(`this is previous user in if blcok: ${JSON.stringify(previousUser)}`)
-      previousEntry = [].concat.apply([], this.cards.map(card => card.entries)).filter(entry => entry.user_id === previousUser.id).sort(compare).slice(-1)[0]
-
-
-      console.log(`this is previous entry in if blcok: ${JSON.stringify(previousEntry)}`)
-    } else {
-      // return the entry of the previous user index
-      previousUser = currentUsers[userIndex - 1]
-      // console.log(`this is previous user in else block: ${JSON.stringify(previousUser)}`)
-      previousEntry = [].concat.apply([], this.cards.map(card => card.entries)).filter(entry => entry.user_id === previousUser.id).sort(compare).slice(-1)[0]
-
-
-      // console.log(`this is previous entry in if blcok: ${JSON.stringify(previousEntry)}`)
->>>>>>> display_buttons
     }
     return previousEntry
   }
-
-  // static checkGamesStatus(){
-  //
-  //   return gameStore.forEach(function(game){
-  //     if(game.num_of_players === game.getUsers().length) {
-  //       game.status = "in progess"
-  //       Adaptor.updateGame(game.status, game.id)
-  //           // "Pending" changes to "In progress" when num_of_players matches total number of users with the associated game id
-  //           // FETCH - PATCH: change status from "pending" to "in progress" to "complete"
-  //     } else if (game.turns === 0){
-  //         game.status = "complete"
-  //       // "in progress" changes to "complete" when number of turns = 0
-  //     }
-  //   })
-  // }
-
-
 
 }
 
