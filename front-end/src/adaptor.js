@@ -87,11 +87,13 @@ const Adaptor = (function() {
             // If your response data doesn't fulfill the condition, then
             // call getGameStatus again recursively.
             // getGameStatus()
-            App.gameLobby(game_id, user_id)
-            Adaptor.getGameStatus(game_id, user_id)
+            Adaptor.updateGameState(game_id).then(res => {
+              App.gameLobby(game_id, user_id)
+            })
+            .then(res => Adaptor.getGameStatus(game_id, user_id))
           }
         })
-    }, 1000);
+    }, 500);
   }
 
     static createNewGame(title, num_of_players){
@@ -110,7 +112,7 @@ const Adaptor = (function() {
       }).then(res => res.json()).
       then(json => {
         let game = new Game(json)
-        console.log(game)
+        // console.log(game)
         App.renderNewUser(game.id)
       })
     }

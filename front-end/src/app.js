@@ -44,16 +44,19 @@ class App {
 
 
     if(event.target.id === "submit-sentence-button"){
+      document.getElementById("submit-sentence-button").style.display = "none"
       let input = document.getElementById("sentence-form").elements[2].value
       let card_id = document.getElementById("sentence-form").elements[1].value
       Adaptor.createEntry(input, user_id, card_id)
       App.getTurnCompleted(input, user_id, card_id)
 
     } else if (event.target.id === "save-image-btn"){
-      console.log("im in the save for an image")
+      document.getElementById("save-image-btn").style.display = "none"
+      document.getElementById("clr").style.display = "none"
+
       let card_id = document.getElementById("save-image-btn").dataset.card
         let input = save()
-        console.log(input)
+        // console.log(input)
         Adaptor.createEntry(input, user_id, card_id)
         App.getTurnCompleted(input, user_id, card_id)
     }
@@ -94,7 +97,7 @@ class App {
 
 
   static renderExistingGames(){
-    console.log("im in render existing games")
+    // console.log("im in render existing games")
 
     let pendingGames = gameStore.filter(game => game.status === "pending")
 
@@ -129,12 +132,14 @@ class App {
     let pre_game_div = document.getElementById("pre-game")
     pre_game_div.innerHTML = ''
     let current_game = gameStore.filter(game => game.id === parseInt(game_id))[0]
-    let users = userStore.filter(user => user.game_id === parseInt(game_id))
-    // need to find a way to calculate number of players in the game
-    console.log("users: ", users, "userid: ", user_id)
+    // let users = userStore.filter(user => user.game_id === parseInt(game_id))
+    let users = current_game.users
+    // console.log(`users in the game are ${users}`)
+
+
     let game_div = document.getElementById("game-div")
     main_body_div.dataset.user = user_id
-    // game_div.dataset.card = card_id[0].id
+
     game_div.innerHTML = ''
 
     let game_view = document.createElement("div")
@@ -257,12 +262,12 @@ class App {
         let game_entries = [].concat.apply([], game_frontend.cards.map(card => card.entries))
         // this conditional will need to change based on the users*turn
         if(game_entries.length === game_frontend.users.length * (game_frontend.turns - 1)){
-          console.log(`current entries: ${game_entries.length}`);
+          // console.log(`current entries: ${game_entries.length}`);
           App.handleTurn(game_id, user_id);
         } else {
-          console.log(`current game entries: ${game_entries.length}`);
-          console.log(`current conditional checker: ${game_frontend.users.length * (game_frontend.turns - 1)}`);
-          console.log(`i'm in updateGameState else`);
+          // console.log(`current game entries: ${game_entries.length}`);
+          // console.log(`current conditional checker: ${game_frontend.users.length * (game_frontend.turns - 1)}`);
+          // console.log(`i'm in updateGameState else`);
           App.getTurnCompleted(input, user_id, card_id)
         }
       })
@@ -275,7 +280,7 @@ class App {
     let main_body_div = document.getElementsByClassName("container")[0]
     let user = userStore.filter(user => user.id == main_body_div.dataset.user)[0]
     let card = game.cards.filter(card => card.id == user.id)[0]
-    console.log(card)
+    // console.log(card)
     let game_div = document.getElementById("game-div")
     game_div.innerHTML = ''
 
@@ -338,6 +343,7 @@ class App {
       submitImgButton.type = "button"
       submitImgButton.value = "save"
       submitImgButton.id = "save-image-btn"
+      submitImgButton.innerText = "Submit Image"
       submitImgButton.dataset.card = entry.card_id
       submitImgButton.size = "30"
 
@@ -347,6 +353,7 @@ class App {
       clearImgButton.type = "button"
       clearImgButton.value = "clear"
       clearImgButton.id = "clr"
+      clearImgButton.innerText = "Clear Image"
       clearImgButton.size = "23"
       clearImgButton.onclick = "erase()"
 
