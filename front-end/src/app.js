@@ -366,7 +366,7 @@ class App {
 
   static renderEntry(entry) {
     let entryElement;
-    debugger
+
     if (entry.input.includes("data:image/png;")) {
        entryElement = document.createElement('img')
        entryElement.src = entry.input
