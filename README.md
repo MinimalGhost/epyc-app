@@ -20,6 +20,7 @@ Then, open index.html from front-end/src in your browser of choice. The frontend
 The app requires a minimum of 2 players to be properly used but is best with 3 or more. You can use ngrok to create a URL to your local host and allow multiple clients to connect and test functionality. Follow the simple ngrok setup to configure.
 
 Api Reference
+
        Prefix Verb   URI Pattern                   Controller#Action
   api_v1_games GET    /api/v1/games(.:format)       api/v1/games#index
                POST   /api/v1/games(.:format)       api/v1/games#create
