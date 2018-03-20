@@ -1,5 +1,5 @@
 ## EPYC App
-A digital multiplayer port of the popular party game "Eat Poop You Cat" that is the drawing equivalent of the game "Telephone." Uses HTML5 canvas to draw and share pictures with other players in a game.
+A digital multiplayer port of the popular party game "Eat Poop You Cat" that is the drawing equivalent of the game "Telephone." Uses HTML5 canvas to draw and share pictures with other players in a game. Demo video can be found [here](https://youtu.be/-FLIYa1f3lg).
 
 ## Installing / Getting Started
 The UI was written using vanilla JavaScript and Skeleton boilerplate. This project uses Rails 5.1.4. It also uses the Postgres database.
